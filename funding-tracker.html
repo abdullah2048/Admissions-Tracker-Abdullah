@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>Funding Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<style>
+:root{
+--bg:#f4f5f3;--surface:#ffffff;--surface2:#eceee9;--fg:#1a1f1c;--muted:#5d655f;--faint:#8b938d;
+--line:#d7dbd6;--line2:#c3c9c3;--accent:#1f5f4a;--accent-fg:#ffffff;--accent-soft:#e3efe9;
+--warn:#8a4b12;--warn-soft:#fbeedd;--bad:#8c2f2f;--bad-soft:#f9e7e5;--good:#1f5f4a;--good-soft:#e3efe9;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+--bg:#131714;--surface:#1b201d;--surface2:#232924;--fg:#e7eae7;--muted:#9ba49d;--faint:#79827b;
+--line:#2d342f;--line2:#3b443d;--accent:#7fc3a9;--accent-fg:#10140f;--accent-soft:#1e2a25;
+--warn:#e0a567;--warn-soft:#2d2318;--bad:#e09a93;--bad-soft:#2d1d1c;--good:#7fc3a9;--good-soft:#1e2a25;
+color-scheme:dark}}
+:root[data-theme="dark"]{
+--bg:#131714;--surface:#1b201d;--surface2:#232924;--fg:#e7eae7;--muted:#9ba49d;--faint:#79827b;
+--line:#2d342f;--line2:#3b443d;--accent:#7fc3a9;--accent-fg:#10140f;--accent-soft:#1e2a25;
+--warn:#e0a567;--warn-soft:#2d2318;--bad:#e09a93;--bad-soft:#2d1d1c;--good:#7fc3a9;--good-soft:#1e2a25;
+color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);margin:0;font:16px/1.55 "Libre Franklin",system-ui,sans-serif;
+padding-block:18px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{margin:0;text-wrap:balance;font-family:Newsreader,Georgia,serif;font-weight:600}
+h1{font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:14.5px;max-width:65ch}
+.lbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:600}
+header{display:flex;flex-direction:column;gap:12px}
+.gre{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;background:var(--accent-soft);border:1px solid var(--line);
+border-left:4px solid var(--accent);border-radius:7px;padding:12px 14px;min-width:0}
+.gre b{font-family:Newsreader,Georgia,serif;font-size:22px;color:var(--accent)}
+.gre span{font-size:14px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);
+border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.tile{background:var(--surface);padding:11px 13px;min-width:0}
+.tile b{display:block;font-family:Newsreader,Georgia,serif;font-size:25px;line-height:1.1}
+.tile span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.bar{height:7px;border-radius:4px;background:var(--surface2);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--accent)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input[type=search],textarea{font:inherit;font-size:14px;background:var(--surface);color:var(--fg);
+border:1px solid var(--line2);border-radius:6px;padding:8px 10px;min-width:0;max-width:100%}
+input[type=search]{flex:1 1 180px}
+textarea{width:100%;min-height:58px;resize:vertical;font-size:14px}
+button{font:inherit;font-size:13.5px;font-weight:600;border-radius:6px;padding:8px 12px;cursor:pointer;
+border:1px solid var(--line2);background:var(--surface);color:var(--fg)}
+button.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.list{display:flex;flex-direction:column;gap:10px}
+article{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.top{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;cursor:pointer}
+.top:hover{background:var(--surface2)}
+.top h3{font-size:17.5px;line-height:1.3;font-family:"Libre Franklin",sans-serif;font-weight:600;min-width:0}
+.top>div{min-width:0;flex:1;display:flex;flex-direction:column;gap:7px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;font-weight:600;padding:2.5px 7px;border-radius:4px;background:var(--surface2);
+color:var(--muted);border:1px solid var(--line)}
+.tag.full{background:var(--good-soft);color:var(--good);border-color:transparent}
+.tag.part{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.tag.due{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.tag.gre{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:7px;background:var(--line2)}
+.body{border-top:1px solid var(--line);padding:14px 15px;display:flex;flex-direction:column;gap:13px;background:var(--surface2)}
+.body p{margin:0;font-size:14.5px;color:var(--muted);max-width:65ch}
+.body p.g{color:var(--fg)}
+ul.req{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+ul.req li{display:flex;gap:9px;align-items:flex-start;font-size:14px;min-width:0}
+.mk{flex:none;width:19px;height:19px;border-radius:4px;font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.mk.ok{background:var(--good-soft);color:var(--good)}
+.mk.check{background:var(--warn-soft);color:var(--warn)}
+.mk.gap{background:var(--bad-soft);color:var(--bad)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.src{font-size:12.5px;color:var(--faint)}
+a{color:var(--accent)}
+.foot{font-size:13px;color:var(--faint);max-width:65ch;display:flex;flex-direction:column;gap:5px}
+.save{font-size:12px;color:var(--faint);min-height:16px}
+@media(max-width:480px){h1{font-size:25px}.tile b{font-size:21px}}
+</style>
+<script>
+var P=[
+{i:"commonwealth",n:"Commonwealth Scholarships (via HEC)",k:"Scholarship",f:"Full",c:"UK",l:"Master's (taught), PhD",cov:"Tuition, airfare, monthly living allowance, study travel grant.",dt:"Closes 20 Oct 2026, 16:00 BST",d:"2026-10-20",g:["unk","The scheme does not set a GRE rule. The UK course you choose does."],v:1,src:"propakistani.pk, 21 Sep 2026",r:[["Full-time taught master's only (no MBA)","ok"],["IELTS 6.5 or equivalent","check"],["Apply on the CSC system and get nomination through the approved agency (HEC)","check"],["Pakistani citizen","ok"]]},
+{i:"chevening",n:"Chevening",k:"Scholarship",f:"Full",c:"UK",l:"Master's (1 year)",cov:"Tuition, living stipend, travel and allowances.",dt:"2027/28 round closed. Next round opens about Aug 2027",d:"",g:["unk","Set by the UK course. LSE Accounting and Finance needs GRE or GMAT."],v:1,src:"chevening.org/scholarships/pakistan",u:"https://www.chevening.org/scholarships/pakistan/",r:[["About 2 years of work experience (you reach this in late 2026)","ok"],["Return to Pakistan for 2 years after the degree","check"],["Three UK course choices on the application","check"],["English test accepted by the universities","check"]]},
+{i:"epos-freiburg",n:"DAAD EPOS: Freiburg MSc Environmental Governance",k:"Scholarship",f:"Full",c:"Germany",l:"Master's, PhD",cov:"EUR 992 per month for master's, insurance, travel allowance, possible fee waiver.",dt:"Closed 15 Oct 2026",d:"2026-10-15",g:["none","GRE not mentioned."],v:1,src:"arynews.tv DAAD EPOS article",r:[["2+ years of relevant work experience","ok"],["Top third of your class","check"],["Economics background accepted, a finance degree is not the target","check"]]},
+{i:"epos-list",n:"DAAD EPOS 2027/28 course list (e.g. Gottingen MSc Development Economics)",k:"Scholarship",f:"Full",c:"Germany",l:"Master's",cov:"Scholarship for development-related courses.",dt:"Per course website. Intake only every two years, next intake 2028",d:"",g:["none","GRE not mentioned on the pages checked."],v:1,src:"static.daad.de deadlines 2027/28 PDF",r:[["2+ years of work experience","ok"],["Development-related course (finance-only courses are not on the list)","check"]]},
+{i:"turkiye",n:"Turkiye Burslari",k:"Scholarship",f:"Full",c:"Turkey",l:"Master's, PhD",cov:"100% tuition, 6,500 TL monthly, housing, insurance, flights, Turkish language year.",dt:"Expected mid-Jan to about 20 Feb 2027 (not yet confirmed)",d:"2027-02-20",est:1,g:["none","GRE not mentioned. Some programmes ask IELTS, TOEFL or YDS."],v:1,src:"opportunityinside.com summary of YTB",r:[["Under 30 years old","check"],["75% or better in your last degree","check"],["Reference letters","check"]]},
+{i:"hungary",n:"Stipendium Hungaricum (via HEC)",k:"Scholarship",f:"Full",c:"Hungary",l:"Master's (100 seats for Pakistan), PhD",cov:"Tuition and stipend. Funding detail is not on the HEC page.",dt:"Next round likely Dec 2026 to Jan 2027 (not confirmed)",d:"2027-01-15",est:1,g:["unk","Not stated on the pages checked."],v:1,pr:"Corvinus University MSc Finance and other approved courses",src:"hec.gov.pk Stipendium Hungaricum page",r:[["Apply on both the HEC portal and the SH portal","check"],["Course must be on the HEC-approved list","check"]]},
+{i:"grenfin",n:"GrEnFIn: Greening Energy Market and Finance (Erasmus Mundus)",k:"Programme",f:"Full",c:"Italy, Germany, France",l:"Joint master's, 24 months",cov:"Erasmus Mundus scholarship: tuition plus monthly allowance (about EUR 1,400, check the scholarship page).",dt:"Closes 7 Jan 2027, 11:00 CET",d:"2027-01-07",g:["unk","Not mentioned on the call page."],v:1,src:"greening-energy-market-finance-emjm.eu",u:"https://greening-energy-market-finance-emjm.eu/application",r:[["Degree in economics, maths, physics, statistics, IT or engineering. Foreign accounting or finance degrees are assessed by the board (email drafted to ask)","gap"],["English at B2 or higher, certified","check"],["CV, transcripts, degree certificate","ok"],["Best fit for energy plus finance profile","ok"]]},
+{i:"epog",n:"EPOG: Economic Policies for the Global Bifurcation (Erasmus Mundus)",k:"Programme",f:"Full",c:"Europe (multi-country)",l:"Joint master's",cov:"Erasmus Mundus scholarship for best-ranked applicants.",dt:"Closes 27 Jan 2027, 13:00 Paris time",d:"2027-01-27",g:["none","Not listed in the requirements found."],v:1,src:"epog.eu admission page (via gksscholarships.com summary)",u:"https://www.epog.eu/admission-and-scholarships/admission/",r:[["Bachelor's of 180 ECTS or equivalent","ok"],["24 ECTS in economics and 6 ECTS in statistics or econometrics","check"],["At least 70% of the maximum GPA (convert your 3.09 CGPA)","check"],["IELTS Academic 7.0, or a degree taught fully in English","check"]]},
+{i:"glocal",n:"GLOCAL: Global Markets, Local Creativities (Erasmus Mundus)",k:"Programme",f:"Full",c:"Glasgow-led, Europe",l:"Joint master's",cov:"Erasmus Mundus scholarship for best-ranked applicants.",dt:"Closes 14 Jan 2027, 13:00 UK time",d:"2027-01-14",g:["unk","Not confirmed."],v:0,src:"gksscholarships.com summary only. Use the official Glasgow portal",r:[["UK 2:1 honours or international equivalent","check"],["Fit with one study track (business and economic history focus, weaker match for energy finance)","gap"],["English proof by the scholarship deadline","check"]]},
+{i:"em-other",n:"Other Erasmus Mundus Joint Masters (200+ programmes)",k:"Scholarship",f:"Full",c:"Europe (multi-country)",l:"Master's (about 2 years)",cov:"About EUR 1,400 per month for up to 24 months plus participation, travel and installation costs.",dt:"Each programme sets its own deadline, mostly Oct to Jan",d:"",g:["unk","The scheme sets no GRE rule. Each programme decides."],v:1,src:"scholarshipscentral.com Erasmus Mundus 2027 guide",r:[["Apply directly to each programme, not to a central portal","check"],["Check the limit on how many programmes you may apply to","check"]]},
+{i:"adb",n:"ADB-Japan Scholarship Program",k:"Scholarship",f:"Full",c:"Japan, China/HK, India, NZ, Philippines, Singapore, Thailand",l:"Master's (1 to 2 years)",cov:"Tuition, monthly allowance, housing, books, insurance, travel.",dt:"No single deadline. Set by each participating university",d:"",g:["unk","Set by each university."],v:1,pr:"Finance and economics master's at ADB-JSP partner universities",src:"afrocareers.com ADB-JSP summary",r:[["2+ years of full-time work after your degree","ok"],["Age 35 or under","check"],["Return home for 2 years after the degree","check"],["Pakistan eligibility on the ADB list","check"]]},
+{i:"jjwbgsp",n:"Joint Japan/World Bank Graduate Scholarship",k:"Scholarship",f:"Full",c:"Many partner universities",l:"Master's (development fields)",cov:"Tuition, stipend, travel, insurance.",dt:"Varies by partner university",d:"",g:["unk","Not confirmed."],v:0,src:"worldbank.org JJ/WBGSP",r:[["2+ years development-related work","check"],["Pakistani eligibility and current dates","check"]]},
+{i:"si",n:"Swedish Institute Scholarships for Global Professionals",k:"Scholarship",f:"Full",c:"Sweden",l:"Master's",cov:"Tuition and living costs.",dt:"Usually opens around Nov, check",d:"",g:["unk","Not confirmed."],v:0,src:"si.se",r:[["Substantial work or leadership experience","check"],["Pakistan eligibility and dates","check"]]},
+{i:"rhodes",n:"Rhodes Scholarship (Pakistan)",k:"Scholarship",f:"Full",c:"UK (Oxford)",l:"Master's, DPhil",cov:"Tuition, stipend, travel.",dt:"Pakistan round typically mid-year, check",d:"",g:["unk","Oxford MSc programmes set their own test rules."],v:0,pr:"Oxford MSc Financial Economics (typically GRE or GMAT, unverified)",src:"rhodeshouse.ox.ac.uk",r:[["Leadership and service record","check"],["Oxford programme entry rules","check"]]},
+{i:"gates",n:"Gates Cambridge",k:"Scholarship",f:"Full",c:"UK (Cambridge)",l:"MPhil, PhD",cov:"Full cost of study.",dt:"Usually early Dec or early Jan, check",d:"",g:["unk","Cambridge MPhil programmes set their own rules (typically GRE or GMAT, unverified)."],v:0,pr:"Cambridge MPhil in Finance / MFin",src:"gatescambridge.org",u:"https://www.gatescambridge.org/",r:[["Apply to Cambridge and be considered automatically for Gates","check"],["Highly competitive: strong grades and leadership","check"]]},
+{i:"csc",n:"Chinese Government Scholarship (CSC) via HEC",k:"Scholarship",f:"Full",c:"China",l:"Master's, PhD",cov:"Tuition, accommodation, monthly stipend.",dt:"Dates vary, check HEC announcements",d:"",g:["unk","Check each university's English and test rules."],v:0,src:"hec.gov.pk, studyinchina.csc.edu.cn",r:[["Apply on both HEC and CSC portals","check"]]},
+{i:"uva",n:"Amsterdam Excellence Scholarship (UvA)",k:"Scholarship",f:"Full",c:"Netherlands",l:"Master's",cov:"EUR 25,000 for one year. Check whether it covers your full costs.",dt:"15 Jan 2027, but faculties set their own dates",d:"2027-01-15",g:["unk","Not confirmed. Check each programme."],v:1,pr:"UvA, Tilburg, Erasmus Rotterdam finance and financial economics masters",src:"heysuccess.com summary of UvA page",r:[["Non-EU student","ok"],["Top 10% of your class","check"],["Excellence and fit with the programme","check"]]},
+{i:"ireland-gov",n:"Government of Ireland International Education Scholarship",k:"Scholarship",f:"Full",c:"Ireland",l:"Master's, PhD (1 year)",cov:"Full tuition waiver plus EUR 10,000 living allowance. One year only.",dt:"2026 round closed 12 Mar 2026. Next call expected Jan to Mar 2027",d:"2027-03-12",est:1,g:["unk","Irish programmes often do not require GRE, but verify."],v:1,pr:"Finance masters at TCD, UCD, Galway, UCC",src:"propakistani.pk Ireland guide",r:[["Offer from an Irish institution first","check"],["Open to non-EU students, Pakistan appears eligible","ok"],["Academic excellence and leadership potential","check"]]},
+{i:"fulbright",n:"Fulbright Pakistan",k:"Scholarship",f:"Full",c:"USA",l:"Master's, PhD",cov:"Tuition, books, airfare, stipend, health insurance.",dt:"2027 round closed 1 Apr. Next round normally announced in Jan",d:"",g:["unk","GRE rule not stated on the announcement page. Check USEFP."],v:1,pr:"Finance and economics masters at US universities",src:"newsletter.usefp.org",u:"https://www.usefp.org/",r:[["Priority fields include trade and economics","check"],["GRE (you sit it on 30 Oct 2026)","ok"]]},
+{i:"kh",n:"Knight-Hennessy Scholars (Stanford)",k:"Scholarship",f:"Full",c:"USA",l:"Master's, PhD, professional",cov:"Full funding plus leadership programme.",dt:"Deadline and test rules not confirmed",d:"",g:["unk","Not confirmed."],v:0,src:"knight-hennessy.stanford.edu",u:"https://knight-hennessy.stanford.edu/",r:[["Apply to Knight-Hennessy and your Stanford degree separately","check"]]},
+{i:"maeci",n:"MAECI Italian Government Scholarship",k:"Scholarship",f:"Full",c:"Italy",l:"Master's, PhD",cov:"EUR 900 per month, tuition waiver at public universities, insurance. Modest stipend.",dt:"Next cycle likely spring 2027 (estimate)",d:"",g:["unk","Not confirmed."],v:1,pr:"Bocconi and other Italian masters",src:"pakobserver.net MAECI article",r:[["Master's applicants under 28","check"],["Bachelor's degree, motivation letter, language certificate","check"]]},
+{i:"swiss",n:"Swiss Government Excellence Scholarship",k:"Scholarship",f:"Partial",c:"Switzerland",l:"Master's (thesis research), PhD, postdoc",cov:"CHF 2,450 per month plus health insurance. Tuition not covered.",dt:"Closes 31 Oct 2026",d:"2026-10-31",g:["none","Not part of the scheme."],v:1,src:"propakistani.pk, 21 Sep 2026",r:[["Swiss supervisor and a research plan","gap"],["Master's must be completed by 31 Jul 2027 (master's rules are narrow, confirm on the official site)","gap"]]},
+{i:"nl",n:"Holland Scholarship / NL Scholarship",k:"Scholarship",f:"Partial",c:"Netherlands",l:"Bachelor's, Master's",cov:"Partial award. Amount and dates not confirmed.",dt:"Varies by institution",d:"",g:["unk","Not confirmed."],v:0,src:"studyinnl.org/finances/scholarships",r:[["Administered by Nuffic. The Orange Knowledge Programme ended in 2024","check"]]},
+{i:"eiffel",n:"Eiffel Excellence Scholarship",k:"Scholarship",f:"Partial",c:"France",l:"Master's, PhD",cov:"EUR 1,181 per month plus travel, insurance and housing help. Tuition NOT covered.",dt:"2026 deadline was 8 Jan 2026. Next round likely Jan 2027",d:"2027-01-08",est:1,g:["unk","Set by each school."],v:1,pr:"Economics and management masters at French universities and business schools",src:"pakistan.campusfrance.org",r:[["Age 29 or under for master's","check"],["A French university nominates you, you cannot apply directly","check"],["Economics and management is an eligible field","ok"]]},
+{i:"bocconi",n:"Bocconi Graduate Award",k:"Scholarship",f:"Partial",c:"Italy",l:"MSc incl. finance programmes",cov:"Full tuition and fee waiver. Living costs not stated.",dt:"2027-28 dates not confirmed",d:"",g:["unk","GMAT or GRE: check each programme page."],v:1,src:"scholarshipsforafricans.com summary",r:[["Merit based, no separate application","ok"],["Test rules for your chosen MSc","check"]]},
+{i:"imperial",n:"Imperial: MSc Climate Change, Management and Finance, plus Imperial awards",k:"Programme",f:"Partial",c:"UK",l:"Master's",cov:"Awards up to GBP 15,000 (Imperial Excellence), Dean's Impact GBP 20,000, part of tuition only. Full funding via Commonwealth or Chevening.",dt:"Round dates 3 Nov, 19 Jan, 29 Mar are from the 2024 intake: confirm for 2027",d:"2027-01-19",est:1,g:["unk","Could not confirm. Check the entry requirements page before relying on a waiver."],v:0,src:"imperial.ac.uk funding and scholarships pages",u:"https://www.imperial.ac.uk/business-school/",r:[["Strong all-round application and interview","check"],["Offer holders in early rounds are considered automatically","check"],["GRE/GMAT requirement","check"]]},
+{i:"lse",n:"LSE: MSc Accounting and Finance, plus needs-based aid",k:"Programme",f:"Partial",c:"UK",l:"Master's",cov:"Part of tuition and costs. Full if combined with Chevening or Commonwealth.",dt:"Aid deadline 22 Apr 2027. Rolling admissions",d:"2027-04-22",g:["req","GRE or GMAT required for applicants without a UK undergraduate degree."],v:1,src:"lse.ac.uk MSc Accounting and Finance page",u:"https://www.lse.ac.uk/",r:[["GRE or GMAT score (booked for 30 Oct 2026)","ok"],["Financial need case for the aid","check"]]},
+{i:"tcd",n:"Trinity College Dublin Global Excellence Postgraduate Scholarship",k:"Scholarship",f:"Partial",c:"Ireland",l:"Master's",cov:"One-time tuition reduction of EUR 2,000 to 5,000.",dt:"2026/27 closed 15 Jun 2026. 2027/28 not announced",d:"",g:["unk","Not confirmed."],v:1,src:"tcd.ie Global Excellence page",r:[["Business courses are excluded, so it does NOT apply to finance masters","gap"]]},
+{i:"frankfurt",n:"Frankfurt School master's scholarships",k:"Scholarship",f:"Partial",c:"Germany",l:"Master of Finance and other masters",cov:"Partial tuition awards.",dt:"Check the school",d:"",g:["unk","Not confirmed."],v:0,src:"frankfurt-school.de",r:[["Dates and amounts not confirmed","check"]]},
+{i:"ucd",n:"UCD Global Excellence Scholarship",k:"Scholarship",f:"Partial",c:"Ireland",l:"Master's",cov:"Partial tuition reduction.",dt:"Check UCD",d:"",g:["unk","Not confirmed."],v:0,src:"ucd.ie",r:[["Amount, eligibility and dates not confirmed","check"]]},
+{i:"edinburgh",n:"Edinburgh Global Masters Scholarships",k:"Scholarship",f:"Partial",c:"UK",l:"Master's",cov:"Partial tuition reduction.",dt:"Check Edinburgh",d:"",g:["unk","Not confirmed."],v:0,src:"ed.ac.uk",r:[["Amount, eligibility and dates not confirmed","check"]]},
+{i:"akf",n:"Aga Khan Foundation International Scholarship Programme",k:"Scholarship",f:"Partial",c:"Various",l:"Master's, PhD",cov:"Usually part grant, part loan.",dt:"Check the current AKF page",d:"",g:["unk","Not confirmed."],v:0,src:"the.akdn",r:[["Current rules and Pakistan eligibility (the page I could load was outdated)","check"]]},
+{i:"eu-gov",n:"Other European government scholarships (Austria OeAD, Czech, Poland NAWA, Estonia, Finland, Denmark)",k:"Scholarship",f:"Mixed",c:"Europe",l:"Master's",cov:"Varies, many are partial.",dt:"Varies, check each",d:"",g:["unk","Not confirmed."],v:0,src:"oead.at, studyinestonia.ee, nawa.gov.pl, studyinfinland.fi",r:[["Pakistani eligibility and dates for each national agency","check"]]}
+];
+</script>
+<main>
+  <header>
+    <div class="lbl">Muhammad Abdullah · Lahore</div>
+    <h1>Funded and partly funded programmes</h1>
+    <p class="sub">Scholarships and master's programmes worth applying to, with what each one covers, when it closes, whether it wants a GRE score, and where you stand. Your status and notes save in whichever browser you open this in.</p>
+    <div class="gre"><b id="greDays">GRE</b><span id="greTxt">General Test, Friday 30 October 2026</span></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="bar"><i id="barFill" style="width:0%"></i></div>
+    <div class="lbl" id="barTxt">Progress</div>
+  </header>
+
+  <div class="ctl">
+    <input type="search" id="q" placeholder="Search name, country, programme" aria-label="Search">
+    <select id="fFund" aria-label="Funding type"><option value="">All funding</option><option>Full</option><option>Partial</option><option>Mixed</option></select>
+    <select id="fStat" aria-label="Status"><option value="">All statuses</option></select>
+    <select id="fGre" aria-label="GRE"><option value="">GRE: any</option><option value="req">GRE required</option><option value="none">No GRE</option><option value="unk">GRE unconfirmed</option></select>
+    <select id="sort" aria-label="Sort"><option value="d">Soonest deadline</option><option value="f">Full funding first</option><option value="n">Name</option></select>
+    <button id="openOnly" aria-pressed="false">Open deadlines only</button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <div class="foot">
+    <span id="saveNote" class="save"></span>
+    <span>Dates marked "estimate" are not confirmed by the awarding body. Entries marked "unverified" need checking on the official page before you rely on them.</span>
+    <span>Eligibility marks: a tick is something you already meet, a question mark needs checking, an exclamation mark is a real gap.</span>
+    <span>Compiled 17 October 2026. Confirm every deadline on the official site before you apply.</span>
+  </div>
+</main>
+<script>
+var ST=["Not started","Researching","Preparing","Applied","Submitted","Interview","Won","Rejected","Skipping"];
+var GRE=new Date(2026,9,30);
+var TODAY=new Date(2026,9,17);
+var state={},db=null,uid=null,LS="abd_tracker_v1";
+function lsLoad(){try{var s=localStorage.getItem(LS);if(s)state=JSON.parse(s)}catch(e){}}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+function note(t){var n=document.getElementById("saveNote");n.textContent=t}
+function days(a,b){return Math.round((b-a)/86400000)}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function st(p){return (state[p.i]&&state[p.i].s)||"Not started"}
+function nt(p){return (state[p.i]&&state[p.i].n)||""}
+
+function greHeader(){
+  var d=days(TODAY,GRE);
+  var g=document.getElementById("greDays");
+  g.textContent=d>0?(d+" days to the GRE"):(d===0?"GRE today":"GRE done");
+  document.getElementById("greTxt").textContent="General Test, Friday 30 October 2026. Scores reach most programmes in about 10 to 15 days.";
+}
+
+function tiles(){
+  var full=0,part=0,soon=0,moving=0;
+  P.forEach(function(p){
+    if(p.f==="Full")full++;else if(p.f==="Partial")part++;
+    var s=st(p);
+    if(["Preparing","Applied","Submitted","Interview","Won"].indexOf(s)>-1)moving++;
+    if(p.d){var dd=days(TODAY,new Date(p.d));if(dd>=0&&dd<=90)soon++}
+  });
+  var t=[[P.length,"Programmes"],[full,"Fully funded"],[part,"Partly funded"],[soon,"Close in 90 days"],[moving,"You are on"]];
+  document.getElementById("tiles").innerHTML=t.map(function(x){
+    return '<div class="tile"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+  var pct=Math.round(moving/P.length*100);
+  document.getElementById("barFill").style.width=pct+"%";
+  document.getElementById("barTxt").textContent=moving+" of "+P.length+" moving ("+pct+"%)";
+}
+
+function card(p){
+  var a=document.createElement("article");
+  var s=st(p),open=false;
+  var dd=p.d?days(TODAY,new Date(p.d)):null;
+  var col={"Not started":"var(--line2)","Researching":"var(--warn)","Preparing":"var(--warn)","Applied":"var(--accent)","Submitted":"var(--accent)","Interview":"var(--accent)","Won":"var(--good)","Rejected":"var(--bad)","Skipping":"var(--faint)"}[s];
+  var tags='<span class="tag '+(p.f==="Full"?"full":p.f==="Partial"?"part":"")+'">'+esc(p.f)+' funding</span>';
+  tags+='<span class="tag">'+esc(p.c)+'</span>';
+  if(p.g[0]==="req")tags+='<span class="tag gre">GRE required</span>';
+  else if(p.g[0]==="none")tags+='<span class="tag">No GRE</span>';
+  else tags+='<span class="tag">GRE unconfirmed</span>';
+  if(dd!==null&&dd>=0&&dd<=45)tags+='<span class="tag due">'+(dd===0?"Due today":dd+" days left")+'</span>';
+  if(dd!==null&&dd<0)tags+='<span class="tag">Closed, watch next round</span>';
+  if(!p.v)tags+='<span class="tag">Unverified</span>';
+  if(p.est)tags+='<span class="tag">Date is an estimate</span>';
+  tags+='<span class="tag">'+esc(s)+'</span>';
+
+  var head=document.createElement("div");head.className="top";head.setAttribute("role","button");head.tabIndex=0;
+  head.innerHTML='<span class="dot" style="background:'+col+'"></span><div><h3>'+esc(p.n)+'</h3><div class="tags">'+tags+'</div><div class="src">'+esc(p.dt)+'</div></div>';
+  a.appendChild(head);
+
+  var b=document.createElement("div");b.className="body";b.hidden=true;
+  var h='<p class="g">'+esc(p.cov)+'</p>';
+  h+='<div><div class="lbl">Eligibility</div><ul class="req">'+p.r.map(function(x){
+    var m=x[1]==="ok"?'<span class="mk ok">&#10003;</span>':x[1]==="gap"?'<span class="mk gap">!</span>':'<span class="mk check">?</span>';
+    return '<li>'+m+'<span>'+esc(x[0])+'</span></li>'}).join("")+'</ul></div>';
+  h+='<div><div class="lbl">GRE</div><p>'+esc(p.g[1])+'</p></div>';
+  if(p.pr)h+='<div><div class="lbl">Programmes</div><p>'+esc(p.pr)+'</p></div>';
+  h+='<div class="row"><span class="lbl">Status</span><select data-id="'+p.i+'" class="selS" aria-label="Status"></select>'+(p.u?'<a href="'+esc(p.u)+'" target="_blank" rel="noopener">Official page</a>':'')+'</div>';
+  h+='<div><div class="lbl">Your notes</div><textarea class="taN" data-id="'+p.i+'" placeholder="What you did, what is left, who you contacted"></textarea></div>';
+  h+='<div class="src">Source: '+esc(p.src)+'</div>';
+  b.innerHTML=h;
+  a.appendChild(b);
+
+  var sel=b.querySelector(".selS");
+  ST.forEach(function(o){var op=document.createElement("option");op.textContent=o;sel.appendChild(op)});
+  sel.value=s;
+  sel.addEventListener("change",function(){set(p.i,{s:sel.value})});
+  sel.addEventListener("click",function(e){e.stopPropagation()});
+  var ta=b.querySelector(".taN");ta.value=nt(p);
+  var tmr=null;
+  ta.addEventListener("input",function(){clearTimeout(tmr);tmr=setTimeout(function(){set(p.i,{n:ta.value})},600)});
+
+  function tog(){open=!open;b.hidden=!open}
+  head.addEventListener("click",tog);
+  head.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+  return a;
+}
+
+function set(id,patch){
+  state[id]=Object.assign({},state[id]||{},patch);
+  lsSave();tiles();
+  if(db&&uid){
+    db.doc("data/users/"+uid+"/tracker").set(state).then(function(){note("Saved")},function(e){note("Saved on this device only")});
+  }else{note("Saved on this device only")}
+  render(true);
+}
+
+var openOnly=false;
+function render(keep){
+  var q=document.getElementById("q").value.toLowerCase().trim();
+  var ff=document.getElementById("fFund").value;
+  var fs=document.getElementById("fStat").value;
+  var fg=document.getElementById("fGre").value;
+  var so=document.getElementById("sort").value;
+  var rows=P.filter(function(p){
+    if(ff&&p.f!==ff)return false;
+    if(fs&&st(p)!==fs)return false;
+    if(fg&&p.g[0]!==fg)return false;
+    if(openOnly){if(!p.d)return false;if(days(TODAY,new Date(p.d))<0)return false}
+    if(q){var hay=(p.n+" "+p.c+" "+p.l+" "+(p.pr||"")+" "+p.cov).toLowerCase();if(hay.indexOf(q)<0)return false}
+    return true;
+  });
+  rows.sort(function(a,b){
+    if(so==="n")return a.n.localeCompare(b.n);
+    if(so==="f"){var r={Full:0,Partial:1,Mixed:2};if(r[a.f]!==r[b.f])return r[a.f]-r[b.f]}
+    var x=a.d?new Date(a.d).getTime():Infinity,y=b.d?new Date(b.d).getTime():Infinity;
+    var xp=a.d&&days(TODAY,new Date(a.d))<0,yp=b.d&&days(TODAY,new Date(b.d))<0;
+    if(xp&&!yp)return 1;if(yp&&!xp)return -1;
+    return x-y;
+  });
+  var L=document.getElementById("list");L.textContent="";
+  if(!rows.length){var e=document.createElement("p");e.className="sub";e.textContent="Nothing matches those filters.";L.appendChild(e);return}
+  rows.forEach(function(p){L.appendChild(card(p))});
+}
+
+lsLoad();
+var fsSel=document.getElementById("fStat");
+ST.forEach(function(o){var op=document.createElement("option");op.textContent=o;fsSel.appendChild(op)});
+["q","fFund","fStat","fGre","sort"].forEach(function(id){
+  var el=document.getElementById(id);
+  el.addEventListener(id==="q"?"input":"change",function(){render()});
+});
+document.getElementById("openOnly").addEventListener("click",function(){
+  openOnly=!openOnly;this.setAttribute("aria-pressed",openOnly?"true":"false");render();
+});
+greHeader();tiles();render();
+
+(async function(){
+  try{
+    if(typeof window.claude==="undefined"||!window.claude||!window.claude.use){note("Notes save in this browser only");return}
+    var u=await claude.use("user");
+    var d=await claude.use("db");
+    if(!u||!d)return;
+    var id=await u.id();
+    if(!id)return;
+    db=d;uid=id;
+    var snap=await d.doc("data/users/"+id+"/tracker").get();
+    if(snap.exists){
+      var rem=snap.data()||{};
+      Object.keys(rem).forEach(function(k){if(!state[k])state[k]=rem[k]});
+      lsSave();tiles();render();
+      note("Synced to your account");
+    }else{note("Synced to your account")}
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>
