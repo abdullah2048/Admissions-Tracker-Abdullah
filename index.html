@@ -3,16 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>
-:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;font:14px system-ui,sans-serif}
-img{max-width:100%}
-[hidden]{display:none!important}
-</style>
-</head>
-<body>
 <title>Funding Tracker</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <style>
 :root{
@@ -39,10 +30,6 @@ h1{font-size:30px;line-height:1.1;letter-spacing:-.01em}
 .sub{color:var(--muted);font-size:14.5px;max-width:65ch}
 .lbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:600}
 header{display:flex;flex-direction:column;gap:12px}
-.gre{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;background:var(--accent-soft);border:1px solid var(--line);
-border-left:4px solid var(--accent);border-radius:7px;padding:12px 14px;min-width:0}
-.gre b{font-family:Newsreader,Georgia,serif;font-size:22px;color:var(--accent)}
-.gre span{font-size:14px;color:var(--muted)}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);
 border:1px solid var(--line);border-radius:7px;overflow:hidden}
 .tile{background:var(--surface);padding:11px 13px;min-width:0}
@@ -88,7 +75,62 @@ a{color:var(--accent)}
 .foot{font-size:13px;color:var(--faint);max-width:65ch;display:flex;flex-direction:column;gap:5px}
 .save{font-size:12px;color:var(--faint);min-height:16px}
 @media(max-width:480px){h1{font-size:25px}.tile b{font-size:21px}}
+
+.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.box b{font-family:Newsreader,Georgia,serif;font-size:34px;line-height:1.05;color:var(--accent);font-weight:600}
+.box span{font-size:13.5px;color:var(--muted)}
+.box.gre{background:var(--accent-soft);border-left:4px solid var(--accent)}
+.hat{display:flex;align-items:flex-end;gap:10px;height:84px}
+.hb{flex:1;max-width:48px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
+.hb i{display:block;width:100%;background:var(--line2);border-radius:4px 4px 0 0}
+.hb i.best{background:var(--accent)}
+.hb em{font-style:normal;font-size:12px;font-weight:700;color:var(--muted)}
+.msg{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 16px;font-size:15.5px}
+.msg b{color:var(--accent)}
+.nextBox{display:flex;flex-direction:column;gap:8px}
+.next{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.nx{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;text-align:left;padding:11px 13px;
+border-radius:10px;background:var(--surface);border:1px solid var(--line);align-items:center;min-width:0}
+.nx b{grid-row:1/3;font-family:Newsreader,Georgia,serif;font-size:34px;line-height:1;color:var(--warn)}
+.nx span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);align-self:end}
+.nx em{font-style:normal;font-size:14px;font-weight:600;line-height:1.3;min-width:0;overflow-wrap:anywhere}
+.filters{display:flex;flex-direction:column;gap:10px}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pills button{border-radius:999px;padding:7px 13px}
+.more summary{cursor:pointer;font-size:13.5px;color:var(--muted);padding:2px 0}
+.more .ctl{margin-top:8px}
+.count{font-size:12.5px;color:var(--faint)}
+.top{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:start;padding:15px 16px}
+.top .mid{display:flex;flex-direction:column;gap:7px;min-width:0}
+.top h3{font-size:18px}
+.one{margin:0;font-size:14.5px;color:var(--muted);max-width:68ch}
+.stat{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.stat .st{width:8px;height:8px;border-radius:50%}
+.dot{display:none}
+.when{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;padding:7px 9px;border-radius:9px;
+background:var(--surface2);color:var(--muted);text-align:center;line-height:1.1}
+.when b{font-family:Newsreader,Georgia,serif;font-size:27px;font-weight:600;color:var(--fg)}
+.when span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.when.hot{background:var(--bad-soft);color:var(--bad)}.when.hot b{color:var(--bad)}
+.when.warm{background:var(--warn-soft);color:var(--warn)}.when.warm b{color:var(--warn)}
+.when.past,.when.none{opacity:.75}
+.chev{color:var(--faint);font-size:15px;padding-top:6px;transition:transform .15s}
+article.open .chev{transform:rotate(180deg)}
+article.open{border-color:var(--line2)}
+.qa{margin-right:4px}
+.ruled{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.ruled summary{cursor:pointer;font-weight:600;font-size:14.5px}
+.ruled ul{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:14px;color:var(--muted);max-width:68ch}
+@media(max-width:560px){
+.top{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"mid chev" "when when"}
+.top .mid{grid-area:mid}.top .when{grid-area:when;flex-direction:row;gap:8px;justify-content:flex-start;align-items:baseline;min-width:0;padding:6px 10px}
+.top .chev{grid-area:chev}
+.box b{font-size:30px}
+}
 </style>
+</head>
+<body>
 <script>
 var P=[
 {i:"commonwealth",n:"Commonwealth Scholarships (via HEC)",k:"Scholarship",f:"Full",c:"UK",l:"Master's (taught), PhD",cov:"Tuition, airfare, monthly living allowance, study travel grant.",dt:"Closes 20 Oct 2026, 16:00 BST",d:"2026-10-20",g:["unk","The scheme does not set a GRE rule. The UK course you choose does."],v:1,src:"propakistani.pk, 21 Sep 2026",r:[["Full-time taught master's only (no MBA)","ok"],["IELTS 6.5 or equivalent","check"],["Apply on the CSC system and get nomination through the approved agency (HEC)","check"],["Pakistani citizen","ok"]]},
@@ -110,7 +152,7 @@ var P=[
 {i:"uva",n:"Amsterdam Excellence Scholarship (UvA)",k:"Scholarship",f:"Full",c:"Netherlands",l:"Master's",cov:"EUR 25,000 for one year. Check whether it covers your full costs.",dt:"15 Jan 2027, but faculties set their own dates",d:"2027-01-15",g:["unk","Not confirmed. Check each programme."],v:1,pr:"UvA, Tilburg, Erasmus Rotterdam finance and financial economics masters",src:"heysuccess.com summary of UvA page",r:[["Non-EU student","ok"],["Top 10% of your class","check"],["Excellence and fit with the programme","check"]]},
 {i:"ireland-gov",n:"Government of Ireland International Education Scholarship",k:"Scholarship",f:"Full",c:"Ireland",l:"Master's, PhD (1 year)",cov:"Full tuition waiver plus EUR 10,000 living allowance. One year only.",dt:"2026 round closed 12 Mar 2026. Next call expected Jan to Mar 2027",d:"2027-03-12",est:1,g:["unk","Irish programmes often do not require GRE, but verify."],v:1,pr:"Finance masters at TCD, UCD, Galway, UCC",src:"propakistani.pk Ireland guide",r:[["Offer from an Irish institution first","check"],["Open to non-EU students, Pakistan appears eligible","ok"],["Academic excellence and leadership potential","check"]]},
 {i:"fulbright",n:"Fulbright Pakistan",k:"Scholarship",f:"Full",c:"USA",l:"Master's, PhD",cov:"Tuition, books, airfare, stipend, health insurance.",dt:"2027 round closed 1 Apr. Next round normally announced in Jan",d:"",g:["unk","GRE rule not stated on the announcement page. Check USEFP."],v:1,pr:"Finance and economics masters at US universities",src:"newsletter.usefp.org",u:"https://www.usefp.org/",r:[["Priority fields include trade and economics","check"],["GRE (you sit it on 30 Oct 2026)","ok"]]},
-{i:"kh",n:"Knight-Hennessy Scholars (Stanford)",k:"Scholarship",f:"Full",c:"USA",l:"Master's, PhD, professional",cov:"Full funding plus leadership programme.",dt:"Deadline and test rules not confirmed",d:"",g:["unk","Not confirmed."],v:0,src:"knight-hennessy.stanford.edu",u:"https://knight-hennessy.stanford.edu/",r:[["Apply to Knight-Hennessy and your Stanford degree separately","check"]]},
+{i:"kh",n:"Knight-Hennessy Scholars (Stanford)",k:"Scholarship",f:"Full",c:"USA",l:"Master's, PhD, professional",cov:"Funds up to three years of graduate study at Stanford, plus a leadership programme.",dt:"Next deadline listed: October 2027 (2028 cohort). 2027 cohort date not confirmed",d:"",g:["unk","Only if your Stanford programme asks for it. Tests are those your programme requires."],v:1,src:"scholarships.berkeley.edu campus page",u:"https://knight-hennessy.stanford.edu/",r:[["Apply to a full-time Stanford graduate degree as well as to Knight-Hennessy","check"],["US bachelor's degree or equivalent earned in January 2021 or later (your LUMS degree is 2024)","check"],["Test scores only where your Stanford programme asks for them","check"]]},
 {i:"maeci",n:"MAECI Italian Government Scholarship",k:"Scholarship",f:"Full",c:"Italy",l:"Master's, PhD",cov:"EUR 900 per month, tuition waiver at public universities, insurance. Modest stipend.",dt:"Next cycle likely spring 2027 (estimate)",d:"",g:["unk","Not confirmed."],v:1,pr:"Bocconi and other Italian masters",src:"pakobserver.net MAECI article",r:[["Master's applicants under 28","check"],["Bachelor's degree, motivation letter, language certificate","check"]]},
 {i:"swiss",n:"Swiss Government Excellence Scholarship",k:"Scholarship",f:"Partial",c:"Switzerland",l:"Master's (thesis research), PhD, postdoc",cov:"CHF 2,450 per month plus health insurance. Tuition not covered.",dt:"Closes 31 Oct 2026",d:"2026-10-31",g:["none","Not part of the scheme."],v:1,src:"propakistani.pk, 21 Sep 2026",r:[["Swiss supervisor and a research plan","gap"],["Master's must be completed by 31 Jul 2027 (master's rules are narrow, confirm on the official site)","gap"]]},
 {i:"nl",n:"Holland Scholarship / NL Scholarship",k:"Scholarship",f:"Partial",c:"Netherlands",l:"Bachelor's, Master's",cov:"Partial award. Amount and dates not confirmed.",dt:"Varies by institution",d:"",g:["unk","Not confirmed."],v:0,src:"studyinnl.org/finances/scholarships",r:[["Administered by Nuffic. The Orange Knowledge Programme ended in 2024","check"]]},
@@ -123,30 +165,71 @@ var P=[
 {i:"ucd",n:"UCD Global Excellence Scholarship",k:"Scholarship",f:"Partial",c:"Ireland",l:"Master's",cov:"Partial tuition reduction.",dt:"Check UCD",d:"",g:["unk","Not confirmed."],v:0,src:"ucd.ie",r:[["Amount, eligibility and dates not confirmed","check"]]},
 {i:"edinburgh",n:"Edinburgh Global Masters Scholarships",k:"Scholarship",f:"Partial",c:"UK",l:"Master's",cov:"Partial tuition reduction.",dt:"Check Edinburgh",d:"",g:["unk","Not confirmed."],v:0,src:"ed.ac.uk",r:[["Amount, eligibility and dates not confirmed","check"]]},
 {i:"akf",n:"Aga Khan Foundation International Scholarship Programme",k:"Scholarship",f:"Partial",c:"Various",l:"Master's, PhD",cov:"Usually part grant, part loan.",dt:"Check the current AKF page",d:"",g:["unk","Not confirmed."],v:0,src:"the.akdn",r:[["Current rules and Pakistan eligibility (the page I could load was outdated)","check"]]},
-{i:"eu-gov",n:"Other European government scholarships (Austria OeAD, Czech, Poland NAWA, Estonia, Finland, Denmark)",k:"Scholarship",f:"Mixed",c:"Europe",l:"Master's",cov:"Varies, many are partial.",dt:"Varies, check each",d:"",g:["unk","Not confirmed."],v:0,src:"oead.at, studyinestonia.ee, nawa.gov.pl, studyinfinland.fi",r:[["Pakistani eligibility and dates for each national agency","check"]]}
+{i:"eu-gov",n:"Other European government scholarships (Austria OeAD, Czech, Poland NAWA, Estonia, Finland, Denmark)",k:"Scholarship",f:"Mixed",c:"Europe",l:"Master's",cov:"Varies, many are partial.",dt:"Varies, check each",d:"",g:["unk","Not confirmed."],v:0,src:"oead.at, studyinestonia.ee, nawa.gov.pl, studyinfinland.fi",r:[["Pakistani eligibility and dates for each national agency","check"]]},
+{i:"gatech-phd",n:"Georgia Tech Scheller College PhD",k:"PhD funding",f:"Full",c:"USA",l:"PhD",cov:"Tuition covered through a research assistantship, a stipend of 35,350 USD per year, funding guaranteed for up to five years. No separate funding application.",dt:"Closes 6 Jan 2027",d:"2027-01-06",g:["req","GRE or GMAT is required. Scores older than five years are not accepted. Your GRE on 30 Oct fits this deadline."],v:1,pr:"Strategy and Innovation is closed for Fall 2027. Check which other research areas are open.",src:"scheller.gatech.edu, financial support and admissions pages",u:"https://www.scheller.gatech.edu/explore-programs/phd/admissions/index.html",r:[["GRE or GMAT sent to Georgia Tech","check"],["TOEFL 100 or IELTS 7 for international applicants","check"],["A PhD needs a clear research question and a faculty match","check"],["Transcripts with English translations","check"]]},
+{i:"usphd",n:"Funded PhDs in the US (economics, finance, policy)",k:"PhD funding",f:"Full",c:"USA",l:"PhD",cov:"Most US PhD offers include a tuition waiver and a stipend, so there is no separate scholarship to win. Terms differ by department, so read each offer.",dt:"Most close between December and mid January (typical, confirm each)",d:"",g:["req","Most economics and finance PhDs ask for the GRE. Confirm per department."],v:0,pr:"Energy and climate economics, finance, public policy.",src:"General pattern, not one page. Verify each department",r:[["GRE score ready before applications (test on 30 Oct)","ok"],["Supervisor emails drafted, not yet sent","check"],["Maths preparation expected by economics PhDs, check each department","check"]]},
+{i:"mines",n:"Colorado School of Mines MS Mineral and Energy Economics",k:"Master's",f:"Mixed",c:"USA",l:"Master's (12 months)",cov:"International tuition is 42,840 USD per year. The listing does not describe assistantships, so ask the department about research or teaching funding before you apply.",dt:"International deadline 1 Mar 2027 for August 2027 start",d:"2027-03-01",g:["req","GRE is required."],v:1,pr:"Energy and minerals economics, close to your energy finance interest.",src:"mastersportal.com listing, official Mines page not opened",u:"https://www.mines.edu/",r:[["GRE you take on 30 Oct","ok"],["IELTS 6.5, TOEFL 79 or Duolingo 105","check"],["Two recommendation letters, CV, statement of purpose","check"]]},
+{i:"hec-top200",n:"HEC Overseas Scholarships, Top 200 universities",k:"Scholarship",f:"Full",c:"Global (top 200 universities)",l:"MS/MPhil, PhD",cov:"The notice I read does not list the benefits. HEC overseas awards are normally fully funded, so check the notice.",dt:"Closed 28 Aug 2026",d:"2026-08-28",g:["unk","Not stated. Selection uses the HAT score and an interview."],v:1,src:"propakistani.pk, 10 Aug 2026",u:"https://eservices.hec.gov.pk",r:[["CGPA 3.0 or higher out of 4.0 (yours is 3.09)","ok"],["HAT score and interview decide selection (your best HAT is 79)","ok"],["Apply on the HEC e-Services portal","check"]]}
 ];
+
 </script>
 <main>
   <header>
     <div class="lbl">Muhammad Abdullah · Lahore</div>
-    <h1>Funded and partly funded programmes</h1>
-    <p class="sub">Scholarships and master's programmes worth applying to, with what each one covers, when it closes, whether it wants a GRE score, and where you stand. Your status and notes save in whichever browser you open this in.</p>
-    <div class="gre"><b id="greDays">GRE</b><span id="greTxt">General Test, Friday 30 October 2026</span></div>
-    <div class="tiles" id="tiles"></div>
-    <div class="bar"><i id="barFill" style="width:0%"></i></div>
-    <div class="lbl" id="barTxt">Progress</div>
+    <h1>Your funding plan</h1>
+    <p class="sub">Funded and partly funded programmes for your master's or PhD, with what each one pays, when it closes, whether it wants a GRE score, and where you stand. Tap any card to open it. Your status and notes save automatically.</p>
   </header>
 
-  <div class="ctl">
-    <input type="search" id="q" placeholder="Search name, country, programme" aria-label="Search">
-    <select id="fFund" aria-label="Funding type"><option value="">All funding</option><option>Full</option><option>Partial</option><option>Mixed</option></select>
-    <select id="fStat" aria-label="Status"><option value="">All statuses</option></select>
-    <select id="fGre" aria-label="GRE"><option value="">GRE: any</option><option value="req">GRE required</option><option value="none">No GRE</option><option value="unk">GRE unconfirmed</option></select>
-    <select id="sort" aria-label="Sort"><option value="d">Soonest deadline</option><option value="f">Full funding first</option><option value="n">Name</option></select>
-    <button id="openOnly" aria-pressed="false">Open deadlines only</button>
-  </div>
+  <section class="hero" aria-label="Your numbers">
+    <div class="box gre">
+      <div class="lbl">GRE General Test</div>
+      <b id="greDays">GRE</b>
+      <span id="greTxt"></span>
+    </div>
+    <div class="box">
+      <div class="lbl">HAT scores</div>
+      <div class="hat" id="hat"></div>
+      <span id="hatTxt"></span>
+    </div>
+    <div class="box">
+      <div class="lbl">CGPA</div>
+      <b>3.09</b>
+      <span>out of 4.0. HEC's overseas notice asks for 3.0 or more.</span>
+    </div>
+  </section>
+
+  <div class="msg" id="msg"></div>
+  <div class="tiles" id="tiles"></div>
+
+  <section id="nextBox" class="nextBox" hidden>
+    <div class="lbl">Closing next, not started yet</div>
+    <div class="next" id="next"></div>
+  </section>
+
+  <section class="filters" aria-label="Filters">
+    <div class="pills" id="regions" role="group" aria-label="Region"></div>
+    <div class="ctl">
+      <div class="pills" id="funds" role="group" aria-label="Funding"></div>
+      <input type="search" id="q" placeholder="Search name, country, programme" aria-label="Search">
+    </div>
+    <details class="more">
+      <summary>More filters and sorting</summary>
+      <div class="ctl">
+        <select id="fStat" aria-label="Status"><option value="">All statuses</option></select>
+        <select id="fGre" aria-label="GRE"><option value="">GRE: any</option><option value="req">GRE required</option><option value="none">No GRE</option><option value="unk">GRE unconfirmed</option></select>
+        <select id="sort" aria-label="Sort"><option value="d">Soonest deadline</option><option value="f">Full funding first</option><option value="n">Name</option></select>
+        <button id="openOnly" aria-pressed="false">Open deadlines only</button>
+      </div>
+    </details>
+    <div class="count" id="count"></div>
+  </section>
 
   <div class="list" id="list"></div>
+
+  <details class="ruled">
+    <summary>Checked and ruled out for now</summary>
+    <ul id="ruled"></ul>
+  </details>
 
   <div class="foot">
     <span id="saveNote" class="save"></span>
@@ -157,68 +240,135 @@ var P=[
 </main>
 <script>
 var ST=["Not started","Researching","Preparing","Applied","Submitted","Interview","Won","Rejected","Skipping"];
+var IN=["Applied","Submitted","Interview","Won"];
+var SEED={chevening:"Applied",commonwealth:"Applied"};
+var HAT=[55,65,79];
+var X=[
+ ["Hubert H. Humphrey Fellowship","Asks for 8 to 18 years of work experience and does not lead to a degree. The 2026 round closed on 20 May."],
+ ["Rotary Peace Fellowship","Asks for at least three years of full-time work or volunteer experience and a peace and conflict focus. You would reach that on experience around late 2027."],
+ ["Fulbright Scholar Program","For PhD holders going to teach or research, not a degree programme. The Fulbright degree route is already in the list."]
+];
+var now=new Date();
+var TODAY=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 var GRE=new Date(2026,9,30);
-var TODAY=new Date(2026,9,17);
-var state={},db=null,uid=null,LS="abd_tracker_v1";
+var state={},db=null,uid=null,LS="abd_tracker_v1",region="",fund="";
 function lsLoad(){try{var s=localStorage.getItem(LS);if(s)state=JSON.parse(s)}catch(e){}}
 function lsSave(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
 function note(t){var n=document.getElementById("saveNote");n.textContent=t}
+function pd(s){var a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2])}
 function days(a,b){return Math.round((b-a)/86400000)}
 function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
-function st(p){return (state[p.i]&&state[p.i].s)||"Not started"}
+function st(p){return (state[p.i]&&state[p.i].s)||SEED[p.i]||"Not started"}
 function nt(p){return (state[p.i]&&state[p.i].n)||""}
+function dleft(p){return p.d?days(TODAY,pd(p.d)):null}
+function reg(p){
+  var c=p.c;
+  if(c.indexOf("USA")===0)return "USA";
+  if(/^(UK|Ireland|Glasgow)/.test(c))return "UK and Ireland";
+  if(/^(Germany|Turkey|Hungary|Italy|Europe|Sweden|Netherlands|Switzerland|France)/.test(c))return "Europe";
+  return "Asia and global";
+}
+var REGS=["USA","UK and Ireland","Europe","Asia and global"];
+function fmt(d){return d.toLocaleDateString("en-GB",{day:"numeric",month:"long"})}
 
-function greHeader(){
+function heroInit(){
   var d=days(TODAY,GRE);
-  var g=document.getElementById("greDays");
-  g.textContent=d>0?(d+" days to the GRE"):(d===0?"GRE today":"GRE done");
-  document.getElementById("greTxt").textContent="General Test, Friday 30 October 2026. Scores reach most programmes in about 10 to 15 days.";
+  document.getElementById("greDays").textContent=d>0?(d+" days to go"):(d===0?"Test day":"Done");
+  var a=new Date(GRE.getTime()+10*86400000),b=new Date(GRE.getTime()+15*86400000);
+  document.getElementById("greTxt").textContent="Friday 30 October 2026. Scores reach most programmes 10 to 15 days later, about "+fmt(a)+" to "+fmt(b)+".";
+  var best=Math.max.apply(null,HAT);
+  document.getElementById("hat").innerHTML=HAT.map(function(v,i){
+    return '<div class="hb"><em>'+v+'</em><i class="'+(v===best?"best":"")+'" style="height:'+Math.round(v*0.55)+'px"></i></div>'}).join("");
+  document.getElementById("hatTxt").textContent="Three attempts, best "+best+"%. The HEC notice I read sets no minimum score, selection is merit based on HAT plus interview. HAT results are reported as valid for two years, so check the date on your result.";
 }
 
-function tiles(){
-  var full=0,part=0,soon=0,moving=0;
+function summary(){
+  var full=0,open=0,inn=0;
   P.forEach(function(p){
-    if(p.f==="Full")full++;else if(p.f==="Partial")part++;
-    var s=st(p);
-    if(["Preparing","Applied","Submitted","Interview","Won"].indexOf(s)>-1)moving++;
-    if(p.d){var dd=days(TODAY,new Date(p.d));if(dd>=0&&dd<=90)soon++}
+    if(p.f==="Full")full++;
+    var dd=dleft(p);if(dd!==null&&dd>=0)open++;
+    if(IN.indexOf(st(p))>-1)inn++;
   });
-  var t=[[P.length,"Programmes"],[full,"Fully funded"],[part,"Partly funded"],[soon,"Close in 90 days"],[moving,"You are on"]];
+  var t=[[P.length,"Programmes"],[full,"Fully funded"],[open,"Open with a date"],[inn,"Applications in"]];
   document.getElementById("tiles").innerHTML=t.map(function(x){
     return '<div class="tile"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
-  var pct=Math.round(moving/P.length*100);
-  document.getElementById("barFill").style.width=pct+"%";
-  document.getElementById("barTxt").textContent=moving+" of "+P.length+" moving ("+pct+"%)";
+
+  var names=P.filter(function(p){return IN.indexOf(st(p))>-1}).map(function(p){return p.n.replace(/ \(via HEC\)/,"")});
+  var nx=P.filter(function(p){var dd=dleft(p);return dd!==null&&dd>=0&&st(p)==="Not started"}).sort(function(a,b){return dleft(a)-dleft(b)});
+  var m=document.getElementById("msg");
+  if(names.length){
+    m.innerHTML='<b>'+names.length+(names.length===1?" application is in.":" applications are in.")+'</b> '+esc(names.join(" and "))+'.'+
+      (nx.length?' Next to start: '+esc(nx[0].n)+', '+(dleft(nx[0])===0?"due today":dleft(nx[0])+" days left")+'.':'');
+  }else{m.innerHTML='<b>No applications marked yet.</b> Open a card and set its status as you go.'}
+  var nb=document.getElementById("nextBox");
+  if(nx.length){
+    nb.hidden=false;
+    document.getElementById("next").innerHTML=nx.slice(0,3).map(function(p){
+      var dd=dleft(p);
+      return '<button class="nx" data-id="'+p.i+'"><b>'+dd+'</b><span>'+(dd===1?"day":"days")+'</span><em>'+esc(p.n)+'</em></button>'}).join("");
+    Array.prototype.forEach.call(document.querySelectorAll(".nx"),function(b){
+      b.addEventListener("click",function(){jump(b.getAttribute("data-id"))})});
+  }else nb.hidden=true;
 }
 
-function card(p){
+function jump(id){
+  region="";fund="";document.getElementById("q").value="";document.getElementById("fStat").value="";
+  document.getElementById("fGre").value="";openOnly=false;document.getElementById("openOnly").setAttribute("aria-pressed","false");
+  pills();render(false,id);
+}
+
+function pills(){
+  var R=document.getElementById("regions");R.textContent="";
+  [["","All regions"]].concat(REGS.map(function(r){return [r,r]})).forEach(function(x){
+    var n=x[0]?P.filter(function(p){return reg(p)===x[0]}).length:P.length;
+    var b=document.createElement("button");b.textContent=x[1]+" "+n;b.setAttribute("aria-pressed",region===x[0]?"true":"false");
+    b.addEventListener("click",function(){region=x[0];pills();render()});R.appendChild(b)});
+  var F=document.getElementById("funds");F.textContent="";
+  [["","Any funding"],["Full","Full"],["Partial","Partial"],["Mixed","Mixed"]].forEach(function(x){
+    var b=document.createElement("button");b.textContent=x[1];b.setAttribute("aria-pressed",fund===x[0]?"true":"false");
+    b.addEventListener("click",function(){fund=x[0];pills();render()});F.appendChild(b)});
+}
+
+function firstLine(s){var m=s.match(/^.{20,150}?[.](\s|$)/);return m?m[0].trim():s}
+
+function card(p,focus){
   var a=document.createElement("article");
-  var s=st(p),open=false;
-  var dd=p.d?days(TODAY,new Date(p.d)):null;
+  var s=st(p),open=!!focus;
+  var dd=dleft(p);
   var col={"Not started":"var(--line2)","Researching":"var(--warn)","Preparing":"var(--warn)","Applied":"var(--accent)","Submitted":"var(--accent)","Interview":"var(--accent)","Won":"var(--good)","Rejected":"var(--bad)","Skipping":"var(--faint)"}[s];
+  var ok=p.r.filter(function(x){return x[1]==="ok"}).length;
   var tags='<span class="tag '+(p.f==="Full"?"full":p.f==="Partial"?"part":"")+'">'+esc(p.f)+' funding</span>';
   tags+='<span class="tag">'+esc(p.c)+'</span>';
   if(p.g[0]==="req")tags+='<span class="tag gre">GRE required</span>';
   else if(p.g[0]==="none")tags+='<span class="tag">No GRE</span>';
   else tags+='<span class="tag">GRE unconfirmed</span>';
-  if(dd!==null&&dd>=0&&dd<=45)tags+='<span class="tag due">'+(dd===0?"Due today":dd+" days left")+'</span>';
-  if(dd!==null&&dd<0)tags+='<span class="tag">Closed, watch next round</span>';
   if(!p.v)tags+='<span class="tag">Unverified</span>';
   if(p.est)tags+='<span class="tag">Date is an estimate</span>';
-  tags+='<span class="tag">'+esc(s)+'</span>';
+  var when;
+  if(dd===null)when='<div class="when none"><span>No fixed date</span></div>';
+  else if(dd<0)when='<div class="when past"><span>Closed</span></div>';
+  else when='<div class="when '+(dd<=14?"hot":dd<=45?"warm":"")+'"><b>'+dd+'</b><span>'+(dd===1?"day":"days")+' left</span></div>';
 
-  var head=document.createElement("div");head.className="top";head.setAttribute("role","button");head.tabIndex=0;
-  head.innerHTML='<span class="dot" style="background:'+col+'"></span><div><h3>'+esc(p.n)+'</h3><div class="tags">'+tags+'</div><div class="src">'+esc(p.dt)+'</div></div>';
+  var head=document.createElement("div");head.className="top";head.setAttribute("role","button");head.tabIndex=0;head.setAttribute("aria-expanded",open?"true":"false");
+  head.innerHTML='<span class="dot" style="background:'+col+'" title="'+esc(s)+'"></span>'+
+    '<div class="mid"><h3>'+esc(p.n)+'</h3><p class="one">'+esc(firstLine(p.cov))+'</p><div class="tags">'+tags+'</div>'+
+    '<div class="src">'+esc(p.dt)+' · '+ok+' of '+p.r.length+' checks already met</div></div>'+when+
+    '<span class="chev" aria-hidden="true">&#9662;</span>';
   a.appendChild(head);
 
-  var b=document.createElement("div");b.className="body";b.hidden=true;
-  var h='<p class="g">'+esc(p.cov)+'</p>';
+  var stBar='<div class="stat"><span class="st" style="background:'+col+'"></span>'+esc(s)+'</div>';
+  head.querySelector(".mid").insertAdjacentHTML("afterbegin",stBar);
+
+  var b=document.createElement("div");b.className="body";b.hidden=!open;
+  var h='<div><div class="lbl">What it pays</div><p class="g">'+esc(p.cov)+'</p></div>';
   h+='<div><div class="lbl">Eligibility</div><ul class="req">'+p.r.map(function(x){
     var m=x[1]==="ok"?'<span class="mk ok">&#10003;</span>':x[1]==="gap"?'<span class="mk gap">!</span>':'<span class="mk check">?</span>';
     return '<li>'+m+'<span>'+esc(x[0])+'</span></li>'}).join("")+'</ul></div>';
   h+='<div><div class="lbl">GRE</div><p>'+esc(p.g[1])+'</p></div>';
-  if(p.pr)h+='<div><div class="lbl">Programmes</div><p>'+esc(p.pr)+'</p></div>';
-  h+='<div class="row"><span class="lbl">Status</span><select data-id="'+p.i+'" class="selS" aria-label="Status"></select>'+(p.u?'<a href="'+esc(p.u)+'" target="_blank" rel="noopener">Official page</a>':'')+'</div>';
+  if(p.pr)h+='<div><div class="lbl">Notes</div><p>'+esc(p.pr)+'</p></div>';
+  h+='<div class="row"><span class="lbl">Status</span><select data-id="'+p.i+'" class="selS" aria-label="Status"></select>'+
+     (IN.indexOf(s)<0?'<button class="pri qa">Mark as applied</button>':'')+
+     (p.u?'<a href="'+esc(p.u)+'" target="_blank" rel="noopener">Official page</a>':'')+'</div>';
   h+='<div><div class="lbl">Your notes</div><textarea class="taN" data-id="'+p.i+'" placeholder="What you did, what is left, who you contacted"></textarea></div>';
   h+='<div class="src">Source: '+esc(p.src)+'</div>';
   b.innerHTML=h;
@@ -227,66 +377,74 @@ function card(p){
   var sel=b.querySelector(".selS");
   ST.forEach(function(o){var op=document.createElement("option");op.textContent=o;sel.appendChild(op)});
   sel.value=s;
-  sel.addEventListener("change",function(){set(p.i,{s:sel.value})});
-  sel.addEventListener("click",function(e){e.stopPropagation()});
+  sel.addEventListener("change",function(){set(p.i,{s:sel.value},true)});
+  var qa=b.querySelector(".qa");
+  if(qa)qa.addEventListener("click",function(){set(p.i,{s:"Applied"},true)});
   var ta=b.querySelector(".taN");ta.value=nt(p);
   var tmr=null;
-  ta.addEventListener("input",function(){clearTimeout(tmr);tmr=setTimeout(function(){set(p.i,{n:ta.value})},600)});
+  ta.addEventListener("input",function(){clearTimeout(tmr);tmr=setTimeout(function(){set(p.i,{n:ta.value},false)},600)});
 
-  function tog(){open=!open;b.hidden=!open}
+  function tog(){open=!open;b.hidden=!open;head.setAttribute("aria-expanded",open?"true":"false");a.classList.toggle("open",open)}
+  if(open)a.classList.add("open");
   head.addEventListener("click",tog);
   head.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tog()}});
+  a.id="c-"+p.i;
   return a;
 }
 
-function set(id,patch){
+var openOnly=false,openIds={};
+function set(id,patch,redraw){
   state[id]=Object.assign({},state[id]||{},patch);
-  lsSave();tiles();
+  if(patch.s&&!state[id].s)state[id].s=patch.s;
+  lsSave();summary();
   if(db&&uid){
     db.doc("data/users/"+uid+"/tracker").set(state).then(function(){note("Saved")},function(e){note("Saved on this device only")});
   }else{note("Saved on this device only")}
-  render(true);
+  if(redraw)render(true,id);
 }
 
-var openOnly=false;
-function render(keep){
+function render(keep,focus){
   var q=document.getElementById("q").value.toLowerCase().trim();
-  var ff=document.getElementById("fFund").value;
   var fs=document.getElementById("fStat").value;
   var fg=document.getElementById("fGre").value;
   var so=document.getElementById("sort").value;
   var rows=P.filter(function(p){
-    if(ff&&p.f!==ff)return false;
+    if(region&&reg(p)!==region)return false;
+    if(fund&&p.f!==fund)return false;
     if(fs&&st(p)!==fs)return false;
     if(fg&&p.g[0]!==fg)return false;
-    if(openOnly){if(!p.d)return false;if(days(TODAY,new Date(p.d))<0)return false}
+    if(openOnly){var dd=dleft(p);if(dd===null||dd<0)return false}
     if(q){var hay=(p.n+" "+p.c+" "+p.l+" "+(p.pr||"")+" "+p.cov).toLowerCase();if(hay.indexOf(q)<0)return false}
     return true;
   });
   rows.sort(function(a,b){
     if(so==="n")return a.n.localeCompare(b.n);
     if(so==="f"){var r={Full:0,Partial:1,Mixed:2};if(r[a.f]!==r[b.f])return r[a.f]-r[b.f]}
-    var x=a.d?new Date(a.d).getTime():Infinity,y=b.d?new Date(b.d).getTime():Infinity;
-    var xp=a.d&&days(TODAY,new Date(a.d))<0,yp=b.d&&days(TODAY,new Date(b.d))<0;
+    var da=dleft(a),db_=dleft(b);
+    var xp=da!==null&&da<0,yp=db_!==null&&db_<0;
     if(xp&&!yp)return 1;if(yp&&!xp)return -1;
+    var x=da===null?Infinity:da,y=db_===null?Infinity:db_;
     return x-y;
   });
+  document.getElementById("count").textContent=rows.length+" of "+P.length+" programmes shown";
   var L=document.getElementById("list");L.textContent="";
   if(!rows.length){var e=document.createElement("p");e.className="sub";e.textContent="Nothing matches those filters.";L.appendChild(e);return}
-  rows.forEach(function(p){L.appendChild(card(p))});
+  rows.forEach(function(p){L.appendChild(card(p,focus===p.i))});
+  if(focus){var el=document.getElementById("c-"+focus);if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest"})}
 }
 
 lsLoad();
 var fsSel=document.getElementById("fStat");
 ST.forEach(function(o){var op=document.createElement("option");op.textContent=o;fsSel.appendChild(op)});
-["q","fFund","fStat","fGre","sort"].forEach(function(id){
+["q","fStat","fGre","sort"].forEach(function(id){
   var el=document.getElementById(id);
   el.addEventListener(id==="q"?"input":"change",function(){render()});
 });
 document.getElementById("openOnly").addEventListener("click",function(){
   openOnly=!openOnly;this.setAttribute("aria-pressed",openOnly?"true":"false");render();
 });
-greHeader();tiles();render();
+document.getElementById("ruled").innerHTML=X.map(function(x){return '<li><b>'+esc(x[0])+'.</b> '+esc(x[1])+'</li>'}).join("");
+heroInit();pills();summary();render();
 
 (async function(){
   try{
@@ -300,8 +458,8 @@ greHeader();tiles();render();
     var snap=await d.doc("data/users/"+id+"/tracker").get();
     if(snap.exists){
       var rem=snap.data()||{};
-      Object.keys(rem).forEach(function(k){if(!state[k])state[k]=rem[k]});
-      lsSave();tiles();render();
+      Object.keys(rem).forEach(function(k){if(!state[k]||!state[k].s)state[k]=Object.assign({},rem[k],state[k]||{})});
+      lsSave();summary();render();
       note("Synced to your account");
     }else{note("Synced to your account")}
   }catch(e){}
