@@ -175,7 +175,8 @@ var P=[
 {i:"ausaid",n:"Australia Awards Scholarship (Pakistan)",k:"Scholarship",f:"Full",c:"Australia",l:"Master's",cov:"Full tuition, return airfare, an establishment allowance, a living allowance (about AUD 26,826 per year in the 2026 figures), and health cover.",dt:"2027 intake closed 30 Apr 2026, 14:00 AEST. Next cycle (2028 intake) not yet announced",d:"",g:["unk","Not seen as a requirement on the pages checked; English is tested via IELTS, not GRE."],v:1,src:"australiaawardspakistan.org Country Profile Intake 2027, propakistani.pk",u:"https://australiaawardspakistan.org/",r:[["Economics and finance are on the eligible field list","ok"],["Return to Pakistan for at least 2 years after the degree","check"],["Apply online through the OASIS system once the next round opens","check"]]},
 {i:"daad-helmut",n:"DAAD Helmut-Schmidt Programme: Public Policy and Good Governance (PPGG)",k:"Scholarship",f:"Full",c:"Germany",l:"Master's (public policy, governance and development tracks)",cov:"EUR 992 per month, tuition waived, health insurance, a travel allowance, plus a study and research subsidy.",dt:"2027/28 cycle closed 31 Jul 2026. Next (2028/29) cycle expected to open around Jun 2027",d:"",est:1,g:["none","Not listed as a requirement; you apply straight to the participating university, not to DAAD."],v:1,pr:"Development and Governance at Duisburg-Essen, or Public Policy at the Willy Brandt School (Erfurt), are the closer fits for an economics and finance background than the other PPGG tracks.",src:"DAAD scholarship database (via scholars4dev.com, tutopiya.com summaries)",r:[["2+ years of relevant work experience, usually required for DAAD PPGG","check"],["Apply to the chosen university directly for both the course and the scholarship","check"],["Field fit: public policy and governance programmes are a stretch from pure finance, check each course's focus","gap"]]},
 {i:"mext",n:"MEXT (Monbukagakusho) Research Scholarship",k:"Scholarship",f:"Full",c:"Japan",l:"Master's, PhD (research student route)",cov:"Tuition waived, a monthly stipend, round-trip airfare. Exact stipend was not confirmed on the pages checked.",dt:"2027 cycle closed 26 May 2026 (Islamabad Embassy). University-recommendation deadlines for the next cycle usually fall Nov 2026 to Jan 2027, not yet confirmed",d:"",g:["unk","Not listed as a requirement on the pages checked. One source says IELTS/TOEFL is not needed to apply; the GRE question is unconfirmed, ask the Embassy directly."],v:0,src:"pk.emb-japan.go.jp MEXT Research Scholarship page",u:"https://www.pk.emb-japan.go.jp/itpr_en/MEXT_Research_Scholarship.html",r:[["Shortlisting is by a written test and interview at the Embassy (Islamabad) or Consulate (Karachi)","check"],["Needs a specific research field and a loose supervisor fit (energy finance is an unusual fit for MEXT's field categories, check the list)","gap"],["Age and degree-recency rules set by MEXT","check"]]},
-{i:"kgsp",n:"Korean Government Scholarship Program (KGSP, graduate)",k:"Scholarship",f:"Full",c:"South Korea",l:"Master's, PhD",cov:"Tuition, a monthly stipend, settlement allowance, airfare, insurance, and a year of Korean-language training. Exact stipend was not confirmed on the pages checked.",dt:"Embassy track for the 2026 round closed 25 Feb 2026 (Pakistan). University track deadlines vary by school. 2027 round not yet announced",d:"",g:["unk","Not confirmed on the pages checked."],v:0,src:"Korean Embassy Islamabad, NIIED/studyinkorea.go.kr (secondary sources conflicted, check directly)",r:[["Embassy track: apply via the Korean Embassy in Islamabad. University track: apply straight to a Korean university","check"],["A year of Korean-language study is normally required before the degree starts","check"],["Degree fit: Korean universities with finance or economics graduate programmes","check"]]}
+{i:"kgsp",n:"Korean Government Scholarship Program (KGSP, graduate)",k:"Scholarship",f:"Full",c:"South Korea",l:"Master's, PhD",cov:"Tuition, a monthly stipend, settlement allowance, airfare, insurance, and a year of Korean-language training. Exact stipend was not confirmed on the pages checked.",dt:"Embassy track for the 2026 round closed 25 Feb 2026 (Pakistan). University track deadlines vary by school. 2027 round not yet announced",d:"",g:["unk","Not confirmed on the pages checked."],v:0,src:"Korean Embassy Islamabad, NIIED/studyinkorea.go.kr (secondary sources conflicted, check directly)",r:[["Embassy track: apply via the Korean Embassy in Islamabad. University track: apply straight to a Korean university","check"],["A year of Korean-language study is normally required before the degree starts","check"],["Degree fit: Korean universities with finance or economics graduate programmes","check"]]},
+{i:"uchicago-mscep",n:"University of Chicago: MS in Climate and Energy Policy (MSCEP), Harris School",k:"Programme",f:"Partial",c:"USA",l:"Master's (1 year)",cov:"No dedicated scholarship confirmed on the pages checked. Harris offers general merit scholarships and need-based aid; check your own offer letter for the amount.",dt:"New programme, first cohort starts Summer 2026. Application deadlines are published on the Harris admissions site, not confirmed on the pages checked",d:"",g:["unk","Harris's GRE waiver attestation is completed as part of the application; MSCEP's exact rule was not confirmed on the pages checked."],v:0,pr:"New programme pairing climate and energy policy at the Harris School, a close fit for your energy finance interest.",src:"climate.uchicago.edu degree programs page, harris.uchicago.edu admissions pages",u:"https://climate.uchicago.edu/degree-programs/",r:[["GRE waiver attestation completed within the application, or a GRE score submitted","check"],["Statement of purpose focused on climate and energy policy","ok"],["Transcripts and recommendation letters","check"]]}
 ];
 
 </script>
@@ -206,6 +207,11 @@ var P=[
 
   <div class="msg" id="msg"></div>
   <div class="tiles" id="tiles"></div>
+
+  <section id="appliedSection" class="nextBox" hidden>
+    <div class="lbl">Your applications &middot; <span id="appliedCount"></span></div>
+    <div class="list" id="appliedList"></div>
+  </section>
 
   <section id="nextBox" class="nextBox" hidden>
     <div class="lbl">Closing next, not started yet</div>
@@ -247,7 +253,7 @@ var P=[
 <script>
 var ST=["Not started","Researching","Preparing","Applied","Submitted","Interview","Won","Rejected","Skipping"];
 var IN=["Applied","Submitted","Interview","Won"];
-var SEED={chevening:"Applied",commonwealth:"Applied"};
+var SEED={chevening:"Applied",commonwealth:"Applied","hec-top200":"Applied","uchicago-mscep":"Applied"};
 var HAT=[55,65,79];
 var X=[
  ["Hubert H. Humphrey Fellowship","Asks for 8 to 18 years of work experience and does not lead to a degree. The 2026 round closed on 20 May."],
@@ -402,11 +408,24 @@ var openOnly=false,openIds={};
 function set(id,patch,redraw){
   state[id]=Object.assign({},state[id]||{},patch);
   if(patch.s&&!state[id].s)state[id].s=patch.s;
-  lsSave();summary();
+  lsSave();summary();renderApplied();
   if(db&&uid){
     db.doc("data/users/"+uid+"/tracker").set(state).then(function(){note("Saved")},function(e){note("Saved on this device only")});
   }else{note("Saved on this device only")}
   if(redraw)render(true,id);
+}
+
+function renderApplied(focus){
+  var rows=P.filter(function(p){return IN.indexOf(st(p))>-1});
+  var ord={Won:0,Interview:1,Submitted:2,Applied:3};
+  rows.sort(function(a,b){var oa=ord[st(a)],ob=ord[st(b)];if(oa!==ob)return oa-ob;return a.n.localeCompare(b.n)});
+  var sec=document.getElementById("appliedSection"),L=document.getElementById("appliedList");
+  if(!rows.length){sec.hidden=true;L.textContent="";return}
+  sec.hidden=false;
+  document.getElementById("appliedCount").textContent=rows.length+(rows.length===1?" application":" applications");
+  L.textContent="";
+  rows.forEach(function(p){L.appendChild(card(p,focus===p.i))});
+  if(focus){var el=document.getElementById("c-"+focus);if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest"})}
 }
 
 function render(keep,focus){
@@ -415,6 +434,7 @@ function render(keep,focus){
   var fg=document.getElementById("fGre").value;
   var so=document.getElementById("sort").value;
   var rows=P.filter(function(p){
+    if(IN.indexOf(st(p))>-1)return false;
     if(region&&reg(p)!==region)return false;
     if(fund&&p.f!==fund)return false;
     if(fs&&st(p)!==fs)return false;
@@ -450,7 +470,7 @@ document.getElementById("openOnly").addEventListener("click",function(){
   openOnly=!openOnly;this.setAttribute("aria-pressed",openOnly?"true":"false");render();
 });
 document.getElementById("ruled").innerHTML=X.map(function(x){return '<li><b>'+esc(x[0])+'.</b> '+esc(x[1])+'</li>'}).join("");
-heroInit();pills();summary();render();
+heroInit();pills();summary();renderApplied();render();
 
 (async function(){
   try{
@@ -465,7 +485,7 @@ heroInit();pills();summary();render();
     if(snap.exists){
       var rem=snap.data()||{};
       Object.keys(rem).forEach(function(k){if(!state[k]||!state[k].s)state[k]=Object.assign({},rem[k],state[k]||{})});
-      lsSave();summary();render();
+      lsSave();summary();renderApplied();render();
       note("Synced to your account");
     }else{note("Synced to your account")}
   }catch(e){}
