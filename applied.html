@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your Applications</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="data.js"></script>
+<main>
+  <header>
+    <div class="navrow">
+      <div class="lbl">Muhammad Abdullah · Lahore</div>
+      <a class="navlink" href="index.html">← Back to funding plan</a>
+    </div>
+    <h1>Your applications</h1>
+    <p class="sub">Every programme you have actually applied to, in one place: what stage it's at, what you still owe it, and how it turned out. Browsing and deadline-tracking for everything else stays on the main funding plan.</p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="list" id="groups"></div>
+
+  <div class="foot">
+    <span id="saveNote" class="save"></span>
+    <span>A programme moves here the moment you mark it Applied, Submitted, Interview, Won or Rejected on the main funding plan, and moves back there if you reset its status to Not started, Researching or Preparing.</span>
+  </div>
+</main>
+<script>
+var GROUPS=[["Won","Won"],["Interview","Interview stage"],["Submitted","Submitted"],["Applied","Applied, awaiting decision"],["Rejected","Rejected"]];
+
+function renderAppliedPage(focus){
+  var rows=P.filter(function(p){return TRACK.indexOf(st(p))>-1});
+
+  var inDecision=rows.filter(function(p){return ["Applied","Submitted","Interview"].indexOf(st(p))>-1}).length;
+  var won=rows.filter(function(p){return st(p)==="Won"}).length;
+  var rej=rows.filter(function(p){return st(p)==="Rejected"}).length;
+  var t=[[rows.length,"Tracked"],[inDecision,"Awaiting decision"],[won,"Won"],[rej,"Rejected"]];
+  document.getElementById("tiles").innerHTML=t.map(function(x){
+    return '<div class="tile"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+
+  var G=document.getElementById("groups");G.textContent="";
+  if(!rows.length){
+    var e=document.createElement("div");e.className="empty";
+    e.textContent="Nothing applied to yet. Go back to the funding plan and mark a programme's status once you start.";
+    G.appendChild(e);
+    return;
+  }
+  GROUPS.forEach(function(gx){
+    var items=rows.filter(function(p){return st(p)===gx[0]}).sort(function(a,b){return a.n.localeCompare(b.n)});
+    if(!items.length)return;
+    var sec=document.createElement("div");sec.className="grp";
+    var h=document.createElement("div");h.className="lbl";h.innerHTML=esc(gx[1])+'<span class="n">'+items.length+'</span>';
+    sec.appendChild(h);
+    var L=document.createElement("div");L.className="list";
+    items.forEach(function(p){L.appendChild(card(p,focus===p.i))});
+    sec.appendChild(L);
+    G.appendChild(sec);
+  });
+  if(focus){var el=document.getElementById("c-"+focus);if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest"})}
+}
+
+onRefresh(function(id){renderAppliedPage(id)});
+renderAppliedPage();
+cloudSync();
+</script>
+
+</body>
+</html>
