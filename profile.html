@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Profile</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="data.js"></script>
+<main>
+  <header>
+    <div class="site">
+      <div class="brand"><b>Funding Tracker</b><span>Muhammad Abdullah · Lahore</span></div>
+    </div>
+    <nav class="topnav">
+      <a href="index.html">Funding Plan</a>
+      <a href="applied.html">Applications</a>
+      <a href="deadlines.html">Deadlines</a>
+      <a href="profile.html" class="active">Profile</a>
+    </nav>
+    <h1>Your profile</h1>
+    <p class="sub">The numbers every eligibility check in this tracker is measured against, and the programmes already checked and set aside.</p>
+  </header>
+
+  <section class="hero" aria-label="Your numbers">
+    <div class="box gre">
+      <div class="lbl">GRE General Test</div>
+      <b id="greDays">GRE</b>
+      <span id="greTxt"></span>
+    </div>
+    <div class="box">
+      <div class="lbl">HAT scores</div>
+      <div class="hat" id="hat"></div>
+      <span id="hatTxt"></span>
+    </div>
+    <div class="box">
+      <div class="lbl">CGPA</div>
+      <b>3.09</b>
+      <span>out of 4.0. HEC's overseas notice asks for 3.0 or more.</span>
+    </div>
+  </section>
+
+  <details class="ruled" open>
+    <summary>Checked and ruled out for now</summary>
+    <ul id="ruled"></ul>
+  </details>
+
+  <div class="foot">
+    <span id="saveNote" class="save"></span>
+    <span>Compiled 17 October 2026, last updated 19 October 2026. Go to the <a href="index.html">Funding Plan</a> to browse everything still open, or <a href="applied.html">Applications</a> to track what you've sent in.</span>
+  </div>
+</main>
+<script>
+function heroInit(){
+  var d=days(TODAY,GRE);
+  document.getElementById("greDays").textContent=d>0?(d+" days to go"):(d===0?"Test day":"Done");
+  var a=new Date(GRE.getTime()+10*86400000),b=new Date(GRE.getTime()+15*86400000);
+  document.getElementById("greTxt").textContent="Friday 30 October 2026. Scores reach most programmes 10 to 15 days later, about "+fmt(a)+" to "+fmt(b)+".";
+  var best=Math.max.apply(null,HAT);
+  document.getElementById("hat").innerHTML=HAT.map(function(v,i){
+    return '<div class="hb"><em>'+v+'</em><i class="'+(v===best?"best":"")+'" style="height:'+Math.round(v*0.55)+'px"></i></div>'}).join("");
+  document.getElementById("hatTxt").textContent="Three attempts, best "+best+"%. The HEC notice I read sets no minimum score, selection is merit based on HAT plus interview. HAT results are reported as valid for two years, so check the date on your result.";
+}
+
+document.getElementById("ruled").innerHTML=X.map(function(x){return '<li><b>'+esc(x[0])+'.</b> '+esc(x[1])+'</li>'}).join("");
+heroInit();
+cloudSync();
+</script>
+
+</body>
+</html>

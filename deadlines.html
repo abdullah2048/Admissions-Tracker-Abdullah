@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Deadlines</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="data.js"></script>
+<main>
+  <header>
+    <div class="site">
+      <div class="brand"><b>Funding Tracker</b><span>Muhammad Abdullah · Lahore</span></div>
+    </div>
+    <nav class="topnav">
+      <a href="index.html">Funding Plan</a>
+      <a href="applied.html">Applications</a>
+      <a href="deadlines.html" class="active">Deadlines</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <h1>Deadlines</h1>
+    <p class="sub">Every programme, closest deadline first, whatever its status. Use this to see what needs a decision this week versus what can wait.</p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+  <div class="list" id="groups"></div>
+
+  <div class="foot">
+    <span id="saveNote" class="save"></span>
+    <span>Dates marked "estimate" are not confirmed by the awarding body, check the official page before you plan around them.</span>
+  </div>
+</main>
+<script>
+var BUCKETS=[
+  ["hot","Closing within 14 days",function(dd){return dd!==null&&dd>=0&&dd<=14}],
+  ["warm","Within 60 days",function(dd){return dd!==null&&dd>14&&dd<=60}],
+  ["later","Later",function(dd){return dd!==null&&dd>60}],
+  ["none","No fixed date",function(dd){return dd===null}],
+  ["past","Closed",function(dd){return dd!==null&&dd<0}]
+];
+
+function renderDeadlines(focus){
+  var withDate=P.filter(function(p){return dleft(p)!==null&&dleft(p)>=0}).length;
+  var soon=P.filter(function(p){var dd=dleft(p);return dd!==null&&dd>=0&&dd<=14}).length;
+  var t=[[P.length,"Total programmes"],[withDate,"Open with a date"],[soon,"Closing within 14 days"]];
+  document.getElementById("tiles").innerHTML=t.map(function(x){
+    return '<div class="tile"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("");
+
+  var G=document.getElementById("groups");G.textContent="";
+  BUCKETS.forEach(function(bx){
+    var items=P.filter(function(p){return bx[2](dleft(p))}).sort(function(a,b){
+      var da=dleft(a),db_=dleft(b);
+      if(da===null&&db_===null)return a.n.localeCompare(b.n);
+      if(da===null)return 1;if(db_===null)return -1;
+      return da-db_;
+    });
+    if(!items.length)return;
+    var sec=document.createElement("div");sec.className="grp";
+    var h=document.createElement("div");h.className="lbl";h.innerHTML=esc(bx[1])+'<span class="n">'+items.length+'</span>';
+    sec.appendChild(h);
+    var L=document.createElement("div");L.className="list";
+    items.forEach(function(p){L.appendChild(card(p,focus===p.i))});
+    sec.appendChild(L);
+    G.appendChild(sec);
+  });
+  if(focus){var el=document.getElementById("c-"+focus);if(el&&el.scrollIntoView)el.scrollIntoView({block:"nearest"})}
+}
+
+onRefresh(function(id){renderDeadlines(id)});
+renderDeadlines();
+cloudSync();
+</script>
+
+</body>
+</html>

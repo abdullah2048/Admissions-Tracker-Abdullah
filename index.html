@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Funding Tracker</title>
+<title>Funding Plan</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -11,31 +11,18 @@
 <script src="data.js"></script>
 <main>
   <header>
-    <div class="navrow">
-      <div class="lbl">Muhammad Abdullah · Lahore</div>
-      <a class="navlink" href="applied.html">Your applications →</a>
+    <div class="site">
+      <div class="brand"><b>Funding Tracker</b><span>Muhammad Abdullah · Lahore</span></div>
     </div>
+    <nav class="topnav">
+      <a href="index.html" class="active">Funding Plan</a>
+      <a href="applied.html">Applications</a>
+      <a href="deadlines.html">Deadlines</a>
+      <a href="profile.html">Profile</a>
+    </nav>
     <h1>Your funding plan</h1>
     <p class="sub">Funded and partly funded programmes for your master's or PhD, with what each one pays, when it closes, whether it wants a GRE score, and where you stand. Tap any card to open it. Your status and notes save automatically.</p>
   </header>
-
-  <section class="hero" aria-label="Your numbers">
-    <div class="box gre">
-      <div class="lbl">GRE General Test</div>
-      <b id="greDays">GRE</b>
-      <span id="greTxt"></span>
-    </div>
-    <div class="box">
-      <div class="lbl">HAT scores</div>
-      <div class="hat" id="hat"></div>
-      <span id="hatTxt"></span>
-    </div>
-    <div class="box">
-      <div class="lbl">CGPA</div>
-      <b>3.09</b>
-      <span>out of 4.0. HEC's overseas notice asks for 3.0 or more.</span>
-    </div>
-  </section>
 
   <div class="msg" id="msg"></div>
   <div class="tiles" id="tiles"></div>
@@ -70,31 +57,15 @@
 
   <div class="list" id="list"></div>
 
-  <details class="ruled">
-    <summary>Checked and ruled out for now</summary>
-    <ul id="ruled"></ul>
-  </details>
-
   <div class="foot">
     <span id="saveNote" class="save"></span>
     <span>Dates marked "estimate" are not confirmed by the awarding body. Entries marked "unverified" need checking on the official page before you rely on them.</span>
     <span>Eligibility marks: a tick is something you already meet, a question mark needs checking, an exclamation mark is a real gap.</span>
-    <span>Compiled 17 October 2026, updated 19 October 2026 with six more programmes (Commonwealth Shared, Clarendon, Australia Awards, DAAD Helmut-Schmidt, MEXT, KGSP) and a separate applications page. Confirm every deadline on the official site before you apply.</span>
+    <span>Compiled 17 October 2026, last updated 19 October 2026. Confirm every deadline on the official site before you apply. See the <a href="profile.html">Profile</a> page for your GRE/HAT numbers and the checked-and-ruled-out list.</span>
   </div>
 </main>
 <script>
 var region="",fund="",openOnly=false;
-
-function heroInit(){
-  var d=days(TODAY,GRE);
-  document.getElementById("greDays").textContent=d>0?(d+" days to go"):(d===0?"Test day":"Done");
-  var a=new Date(GRE.getTime()+10*86400000),b=new Date(GRE.getTime()+15*86400000);
-  document.getElementById("greTxt").textContent="Friday 30 October 2026. Scores reach most programmes 10 to 15 days later, about "+fmt(a)+" to "+fmt(b)+".";
-  var best=Math.max.apply(null,HAT);
-  document.getElementById("hat").innerHTML=HAT.map(function(v,i){
-    return '<div class="hb"><em>'+v+'</em><i class="'+(v===best?"best":"")+'" style="height:'+Math.round(v*0.55)+'px"></i></div>'}).join("");
-  document.getElementById("hatTxt").textContent="Three attempts, best "+best+"%. The HEC notice I read sets no minimum score, selection is merit based on HAT plus interview. HAT results are reported as valid for two years, so check the date on your result.";
-}
 
 function summary(){
   var full=0,open=0,inn=0;
@@ -198,8 +169,7 @@ ST.forEach(function(o){var op=document.createElement("option");op.textContent=o;
 document.getElementById("openOnly").addEventListener("click",function(){
   openOnly=!openOnly;this.setAttribute("aria-pressed",openOnly?"true":"false");render();
 });
-document.getElementById("ruled").innerHTML=X.map(function(x){return '<li><b>'+esc(x[0])+'.</b> '+esc(x[1])+'</li>'}).join("");
-heroInit();pills();summary();renderApplied();render();
+summary();renderApplied();render();pills();
 cloudSync();
 </script>
 
